@@ -1,0 +1,52 @@
+{
+  "name": "@dotplants/cli",
+  "version": "1.0.0",
+  "author": "dotPlants HQ <oss@dotplants.net>",
+  "main": "./build/index.js",
+  "license": "MIT",
+  "repository": "https://github.com/dotplants/cli.git",
+  "homepage": "https://github.com/dotplants/cli",
+  "engines": {
+    "node": "10.x || 12.x || 13.x"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint:prettier": "pretty-quick --check",
+    "lint:eslint": "eslint --ignore-path .gitignore \"**/*.ts\"",
+    "lint:tsc": "tsc",
+    "lint": "npm-run-all lint:* -s",
+    "format:prettier": "pretty-quick",
+    "format:js": "eslint --fix --ignore-path .gitignore \"**/*.ts\"",
+    "format": "npm-run-all format:* -s",
+    "build": "babel src -d build --extensions '.ts'",
+    "start": "yarn build && node example",
+    "prepublish": "yarn build"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.7",
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-typescript": "^7.7.7",
+    "@types/node": "^13.1.6",
+    "@typescript-eslint/eslint-plugin": "^2.15.0",
+    "@typescript-eslint/parser": "^2.15.0",
+    "@yuzulabo/eslint-config": "^1.0.1",
+    "@yuzulabo/prettier-config": "~1",
+    "eslint": "~6",
+    "npm-run-all": "~4",
+    "prettier": "~1",
+    "pretty-quick": "^2.0.1",
+    "typescript": "^3.7.4"
+  },
+  "dependencies": {},
+  "files": [
+    "package.json",
+    "yarn.lock",
+    "LICENSE",
+    "README.md",
+    "/build"
+  ],
+  "prettier": "@yuzulabo/prettier-config"
+}
