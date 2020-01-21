@@ -31,7 +31,7 @@
     "@babel/preset-typescript": "^7.8.3",
     "@types/node": "^13.1.8",
     "@typescript-eslint/eslint-plugin": "^2.16.0",
-    "@typescript-eslint/parser": "^2.16.0",
+    "@typescript-eslint/parser": "^2.17.0",
     "@yuzulabo/eslint-config": "^1.0.1",
     "@yuzulabo/prettier-config": "~1",
     "eslint": "~6",
