@@ -2,6 +2,9 @@
   "name": "@dotplants/cli",
   "version": "1.0.0",
   "author": "dotPlants HQ <oss@dotplants.net>",
+  "maintainers": [
+    "nzws <nzws@hq.dotplants.net>"
+  ],
   "main": "./build/index.js",
   "license": "MIT",
   "repository": "https://github.com/dotplants/cli.git",
@@ -20,7 +23,9 @@
     "format:prettier": "pretty-quick",
     "format:js": "eslint --fix --ignore-path .gitignore \"**/*.ts\"",
     "format": "npm-run-all format:* -s",
-    "build": "babel src -d build --extensions '.ts'",
+    "build:ts": "babel src -d build --extensions \".ts\"",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build": "npm-run-all build:* -s",
     "start": "yarn build && node example",
     "prepublish": "yarn build"
   },
@@ -29,9 +34,9 @@
     "@babel/core": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-typescript": "^7.8.3",
-    "@types/node": "^13.1.8",
-    "@typescript-eslint/eslint-plugin": "^2.16.0",
-    "@typescript-eslint/parser": "^2.16.0",
+    "@types/node": "^13.5.1",
+    "@typescript-eslint/eslint-plugin": "^2.18.0",
+    "@typescript-eslint/parser": "^2.18.0",
     "@yuzulabo/eslint-config": "^1.0.1",
     "@yuzulabo/prettier-config": "~1",
     "eslint": "~6",
