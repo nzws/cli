@@ -8,24 +8,24 @@ jobs:
   publish:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: 12.x
+    env:
+      node-version: 12.x
 
     steps:
       - uses: actions/checkout@v1
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js ${{ env.node-version }} and setup .npmrc
         uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: ${{ env.node-version }}
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Restore deps from actions cache
         uses: actions/cache@v1
         id: cache
         with:
           path: node_modules
-          key: ${{ runner.os }}-${{ matrix.node-version }}-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-${{ env.node-version }}-${{ hashFiles('yarn.lock') }}
 
       - name: Install deps
         if: steps.cache.outputs.cache-hit != 'true'
