@@ -2,9 +2,9 @@ const cli = require('../build');
 const { version } = require('./package');
 
 cli({
-  name: `example-cli ${version}`,
-  binName: 'example',
-  default: 'debug',
+  name: `example-multi-cli ${version}`,
+  binName: 'example-multi',
+  defaultCommand: 'debug',
   commands: {
     debug: {
       function({ args, flags }) {
@@ -13,10 +13,12 @@ cli({
       argsName: [],
       flags: {
         flag: {
-          name: ['flag', 'f']
+          name: ['flag', 'f'],
+          description: 'flag (bool)'
         },
         hasValueFlag: {
           name: ['value-flag', 'v'],
+          description: 'flag (text)',
           hasValue: true
         }
       }
@@ -28,6 +30,7 @@ cli({
       flags: {
         name: {
           name: ['name', 'n'],
+          description: 'your name',
           hasValue: true
         }
       }

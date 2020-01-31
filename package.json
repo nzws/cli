@@ -26,7 +26,8 @@
     "build:ts": "babel src -d build --extensions \".ts\"",
     "build:types": "tsc --emitDeclarationOnly",
     "build": "npm-run-all build:* -s",
-    "start": "yarn build:ts && node example"
+    "start:multi": "yarn build:ts && node example/multi.js",
+    "start:single": "yarn build:ts && node example/single.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -52,5 +53,8 @@
     "README.md",
     "/build"
   ],
-  "prettier": "@yuzulabo/prettier-config"
+  "prettier": "@yuzulabo/prettier-config",
+  "dependencies": {
+    "kleur": "^3.0.3"
+  }
 }

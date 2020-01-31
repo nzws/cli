@@ -1,22 +1,35 @@
-type Command = {
+import help from './help';
+
+export type Command = {
+  description: string;
+  moreDescription?: string;
   function: Function;
   argsName?: Array<string>;
   flags?: {
     [key: string]: {
       name: string | Array<string>;
+      description: string;
       hasValue?: boolean;
     };
   };
 };
 type Commands = { [key: string]: Command };
 
-type Config = {
+export type Config = {
   name: string;
   binName: string;
   command?: Command;
   commands?: Commands;
-  default?: string;
+  defaultCommand?: string;
   args?: Array<string>;
+};
+
+export type commandFunction = {
+  args: Array<string>;
+  flags: {
+    [key: string]: string | true;
+  };
+  isDefault: boolean;
 };
 
 const run = (config: Config): void => {
@@ -24,7 +37,12 @@ const run = (config: Config): void => {
     config.args || process.argv.filter((v, index) => index > 1);
   const flag: number = argv.findIndex(v => String(v).slice(0, 1) !== '-');
 
+  if (config.commands) {
+    config.commands.help = help(config);
+  }
+
   let command: Command;
+  let isDefault = false;
   if (flag !== -1 && config.commands) {
     command = config.commands[argv[flag]];
     if (!command) {
@@ -32,13 +50,18 @@ const run = (config: Config): void => {
     }
     argv.splice(flag, 1);
   } else {
-    // single or default
-    if (config.default && config.commands) {
-      command = config.commands[config.default];
+    if (config.defaultCommand && config.commands) {
+      isDefault = true;
+      command = config.commands[config.defaultCommand];
     } else if (config.command) {
       command = config.command;
+
+      if (argv[flag] === 'help') {
+        command = help(config);
+        argv.splice(flag, 1);
+      }
     } else {
-      throw new Error(`Unknown command`);
+      command = help(config);
     }
   }
 
@@ -73,7 +96,7 @@ const run = (config: Config): void => {
       });
   }
 
-  command.function({ args, flags });
+  command.function({ args, flags, isDefault });
 };
 
 export default run;
