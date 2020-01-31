@@ -20,15 +20,7 @@ jobs:
           node-version: ${{ env.node-version }}
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Restore deps from actions cache
-        uses: actions/cache@v1
-        id: cache
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-${{ env.node-version }}-${{ hashFiles('yarn.lock') }}
-
       - name: Install deps
-        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn --frozen-lockfile
 
       - name: Build files
