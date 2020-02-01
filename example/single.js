@@ -5,6 +5,7 @@ cli({
   name: `example-cli ${version}`,
   binName: 'example',
   command: {
+    description: 'Say hello!',
     function({ flags }) {
       console.log(`Hello, ${flags.name || 'JavaScripter'}!`);
     },

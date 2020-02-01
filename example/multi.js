@@ -7,6 +7,7 @@ cli({
   defaultCommand: 'debug',
   commands: {
     debug: {
+      description: 'debug',
       function({ args, flags }) {
         console.log(args, flags);
       },
@@ -24,6 +25,7 @@ cli({
       }
     },
     hello: {
+      description: 'hello',
       function({ flags }) {
         console.log(`Hello, ${flags.name || 'JavaScripter'}!`);
       },

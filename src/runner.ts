@@ -1,8 +1,9 @@
-import help from './help';
+import help from './commands/help';
+import { errorExit } from './utils/exit';
 
 export type Command = {
   description: string;
-  moreDescription?: string;
+  moreDescription?: string | Array<string>;
   function: Function;
   argsName?: Array<string>;
   flags?: {
@@ -33,70 +34,74 @@ export type commandFunction = {
 };
 
 const run = (config: Config): void => {
-  const argv: Array<string> =
-    config.args || process.argv.filter((v, index) => index > 1);
-  const flag: number = argv.findIndex(v => String(v).slice(0, 1) !== '-');
+  try {
+    const argv: Array<string> =
+      config.args || process.argv.filter((v, index) => index > 1);
+    const flag: number = argv.findIndex(v => String(v).slice(0, 1) !== '-');
 
-  if (config.commands) {
-    config.commands.help = help(config);
-  }
-
-  let command: Command;
-  let isDefault = false;
-  if (flag !== -1 && config.commands) {
-    command = config.commands[argv[flag]];
-    if (!command) {
-      throw new Error(`This command is not found.`);
+    if (config.commands) {
+      config.commands.help = help(config);
     }
-    argv.splice(flag, 1);
-  } else {
-    if (config.defaultCommand && config.commands) {
-      isDefault = true;
-      command = config.commands[config.defaultCommand];
-    } else if (config.command) {
-      command = config.command;
 
-      if (argv[flag] === 'help') {
-        command = help(config);
-        argv.splice(flag, 1);
+    let command: Command;
+    let isDefault = false;
+    if (flag !== -1 && config.commands) {
+      command = config.commands[argv[flag]];
+      if (!command) {
+        throw new Error(`This command is not found.`);
       }
+      argv.splice(flag, 1);
     } else {
-      command = help(config);
+      if (config.defaultCommand && config.commands) {
+        isDefault = true;
+        command = config.commands[config.defaultCommand];
+      } else if (config.command) {
+        command = config.command;
+
+        if (argv[flag] === 'help') {
+          command = help(config);
+          argv.splice(flag, 1);
+        }
+      } else {
+        command = help(config);
+      }
     }
-  }
 
-  const args: Array<string> = argv.filter(v => v.slice(0, 1) !== '-');
-  const flags: { [key: string]: string | true } = {};
-  if (command.flags) {
-    argv
-      .filter(v => v.slice(0, 1) === '-')
-      .forEach(v => {
-        let flagData = v;
-        if (flagData.indexOf('--') === 0) {
-          flagData = flagData.slice(2);
-        }
-        if (flagData.indexOf('-') === 0) {
-          flagData = flagData.slice(1);
-        }
-        const data = flagData.split('=');
-
-        const Flags = command.flags || {};
-        const flagId: string | undefined = Object.keys(Flags).find(
-          (key: string) => {
-            const name = Flags[key].name;
-            // string / array
-            return typeof name === 'string'
-              ? name === data[0]
-              : name.indexOf(data[0]) !== -1;
+    const args: Array<string> = argv.filter(v => v.slice(0, 1) !== '-');
+    const flags: { [key: string]: string | true } = {};
+    if (command.flags) {
+      argv
+        .filter(v => v.slice(0, 1) === '-')
+        .forEach(v => {
+          let flagData = v;
+          if (flagData.indexOf('--') === 0) {
+            flagData = flagData.slice(2);
           }
-        );
-        if (flagId) {
-          flags[flagId] = data[1] || true;
-        }
-      });
-  }
+          if (flagData.indexOf('-') === 0) {
+            flagData = flagData.slice(1);
+          }
+          const data = flagData.split('=');
 
-  command.function({ args, flags, isDefault });
+          const Flags = command.flags || {};
+          const flagId: string | undefined = Object.keys(Flags).find(
+            (key: string) => {
+              const name = Flags[key].name;
+              // string / array
+              return typeof name === 'string'
+                ? name === data[0]
+                : name.indexOf(data[0]) !== -1;
+            }
+          );
+          if (flagId) {
+            flags[flagId] = data[1] || true;
+          }
+        });
+    }
+
+    Promise.resolve(command.function({ args, flags, isDefault }));
+  } catch (e) {
+    errorExit(e);
+  }
 };
 
 export default run;
