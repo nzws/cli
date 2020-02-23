@@ -1,5 +1,6 @@
 import { bold } from 'kleur';
 import { Command, commandFunction, Config } from '../runner';
+import { addPrefix } from '../utils/prefix';
 
 const help = ({
   name,
@@ -13,6 +14,9 @@ const help = ({
     const msg: Array<string | false | undefined> = [bold(name), ''];
     const helpCommand = args[0];
 
+    // (multi) [bin] help [command]: [command] の詳細
+    // (multi) [bin] help: デフォルトコマンド
+    // (single) [bin] help: コマンド
     if (command || (defaultCommand && commands) || helpCommand) {
       const data = commands
         ? commands[helpCommand || defaultCommand || '']
@@ -28,7 +32,7 @@ const help = ({
         msg.push(
           ...[
             `Usage: ${binName} ${helpCommand ? `${helpCommand} ` : ''}${
-              data.argsName ? data.argsName.map(v => `[${v}] `).join() : ''
+              data.argsName ? data.argsName.map(v => `[${v}] `).join('') : ''
             }[options]`,
             data.description || helpCommand || defaultCommand,
             moreDesc
@@ -45,12 +49,12 @@ const help = ({
                 flag.name = [flag.name];
               }
               const names = flag.name.map(
-                v =>
-                  bold(v.length === 1 ? `-${v}` : `--${v}`) +
-                  (flag.hasValue ? `=[value]` : '')
+                v => bold(addPrefix(v)) + (flag.hasValue ? `=[value]` : '')
               );
 
-              return `  ${names.join(', ')}: ${flag.description || key}`;
+              return `  ${names.join(', ')}: ${flag.description || key} ${
+                flag.hasValue === 2 ? bold('(required)') : ''
+              }`;
             })
           );
         }
@@ -59,6 +63,7 @@ const help = ({
       }
     }
 
+    // multi: コマンド一覧
     if (commands && !helpCommand) {
       if (defaultCommand) {
         msg.push('');

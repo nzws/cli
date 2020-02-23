@@ -11,7 +11,7 @@ cli({
       function({ args, flags }) {
         console.log(args, flags);
       },
-      argsName: [],
+      argsName: ['test', 'test2'],
       flags: {
         flag: {
           name: ['flag', 'f'],
@@ -20,7 +20,7 @@ cli({
         hasValueFlag: {
           name: ['value-flag', 'v'],
           description: 'flag (text)',
-          hasValue: true
+          hasValue: 1
         }
       }
     },
@@ -33,7 +33,7 @@ cli({
         name: {
           name: ['name', 'n'],
           description: 'your name',
-          hasValue: true
+          hasValue: 2
         }
       }
     }

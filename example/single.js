@@ -13,7 +13,7 @@ cli({
       name: {
         name: ['name', 'n'],
         description: 'your name',
-        hasValue: true
+        hasValue: 1
       }
     }
   }

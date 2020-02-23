@@ -1,5 +1,7 @@
 import help from './commands/help';
 import { errorExit } from './utils/exit';
+import { bold } from 'kleur';
+import { addPrefix, removePrefix } from './utils/prefix';
 
 export type Command = {
   description: string;
@@ -10,7 +12,7 @@ export type Command = {
     [key: string]: {
       name: string | Array<string>;
       description: string;
-      hasValue?: boolean;
+      hasValue?: 0 | 1 | 2;
     };
   };
 };
@@ -39,6 +41,7 @@ const run = (config: Config): void => {
       config.args || process.argv.filter((v, index) => index > 1);
     const flag: number = argv.findIndex(v => String(v).slice(0, 1) !== '-');
 
+    // マルチだったら: helpコマンドを注入
     if (config.commands) {
       config.commands.help = help(config);
     }
@@ -73,29 +76,56 @@ const run = (config: Config): void => {
       argv
         .filter(v => v.slice(0, 1) === '-')
         .forEach(v => {
-          let flagData = v;
-          if (flagData.indexOf('--') === 0) {
-            flagData = flagData.slice(2);
+          const flagData = removePrefix(v).split('=');
+          if (flagData.length > 2) {
+            throw new Error(
+              `The '${bold('=')}' symbol can't be used for flag's value.`
+            );
           }
-          if (flagData.indexOf('-') === 0) {
-            flagData = flagData.slice(1);
-          }
-          const data = flagData.split('=');
+          const [key, value] = flagData;
 
           const Flags = command.flags || {};
           const flagId: string | undefined = Object.keys(Flags).find(
-            (key: string) => {
-              const name = Flags[key].name;
+            (id: string) => {
+              const name = Flags[id].name;
               // string / array
               return typeof name === 'string'
-                ? name === data[0]
-                : name.indexOf(data[0]) !== -1;
+                ? name === key
+                : name.indexOf(key) !== -1;
             }
           );
-          if (flagId) {
-            flags[flagId] = data[1] || true;
+          if (flagId === undefined) {
+            throw new Error(`unknown flag: ${bold(addPrefix(key))}`);
           }
+
+          const flagConfig = Flags[flagId];
+          if (flagConfig.hasValue === 0 && value !== undefined) {
+            throw new Error(
+              `${bold(addPrefix(key))} has no value. ${addPrefix(key)}`
+            );
+          } else if (flagConfig.hasValue === 2 && value === undefined) {
+            throw new Error(
+              `${bold(addPrefix(key))} requires a value. (${addPrefix(
+                key
+              )}=[value])`
+            );
+          }
+
+          flags[flagId] = value || true;
         });
+
+      Object.keys(command.flags).forEach(id => {
+        const config = (command.flags || {})[id];
+        if (config.hasValue === 2 && flags[id] === undefined) {
+          const flagKey =
+            typeof config.name === 'string' ? config.name : config.name[0];
+          throw new Error(
+            `flag '${bold(id)}' requires a value. (${addPrefix(
+              flagKey
+            )}=[value])`
+          );
+        }
+      });
     }
 
     Promise.resolve(command.function({ args, flags, isDefault }));
