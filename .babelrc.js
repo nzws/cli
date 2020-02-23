@@ -10,5 +10,10 @@ module.exports = {
     ],
     '@babel/preset-typescript'
   ],
-  plugins: ['add-module-exports']
+  plugins: ['add-module-exports'],
+  env: {
+    production: {
+      presets: ['minify']
+    }
+  }
 };

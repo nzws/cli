@@ -23,11 +23,12 @@
     "format:prettier": "pretty-quick",
     "format:js": "eslint --fix --ignore-path .gitignore \"**/*.ts\"",
     "format": "npm-run-all format:* -s",
-    "build:ts": "babel src -d build --extensions \".ts\"",
+    "build:ts": "cross-env NODE_ENV=production babel src -d build --extensions \".ts\"",
     "build:types": "tsc --emitDeclarationOnly",
     "build": "npm-run-all build:* -s",
-    "start:multi": "yarn build:ts && node example/multi.js",
-    "start:single": "yarn build:ts && node example/single.js"
+    "dev-build": "cross-env NODE_ENV=development babel src -d build --extensions \".ts\"",
+    "start:multi": "yarn dev-build && node example/multi.js",
+    "start:single": "yarn dev-build && node example/single.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -40,6 +41,7 @@
     "@yuzulabo/eslint-config": "^1.0.1",
     "@yuzulabo/prettier-config": "~1",
     "babel-plugin-add-module-exports": "^1.0.2",
+    "babel-preset-minify": "^0.5.1",
     "eslint": "~6",
     "npm-run-all": "~4",
     "prettier": "~1",
@@ -47,11 +49,8 @@
     "typescript": "^3.8.2"
   },
   "files": [
-    "package.json",
-    "yarn.lock",
-    "LICENSE",
     "README.md",
-    "/build"
+    "build/*"
   ],
   "prettier": "@yuzulabo/prettier-config",
   "dependencies": {
