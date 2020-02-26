@@ -13,7 +13,8 @@ module.exports = {
   plugins: ['add-module-exports'],
   env: {
     production: {
-      presets: ['minify']
+      presets: ['minify'],
+      comments: false
     }
   }
 };

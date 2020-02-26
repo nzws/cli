@@ -30,18 +30,17 @@ const help = ({
             : data.moreDescription.join('\n'));
 
         msg.push(
-          ...[
-            `Usage: ${binName} ${helpCommand ? `${helpCommand} ` : ''}${
-              data.argsName ? data.argsName.map(v => `[${v}] `).join('') : ''
-            }[options]`,
-            data.description || helpCommand || defaultCommand,
-            moreDesc
-          ]
+          `Usage: ${binName} ${helpCommand ? `${helpCommand} ` : ''}${
+            data.argsName ? data.argsName.map(v => `[${v}] `).join('') : ''
+          }[options]`,
+          data.description || helpCommand || defaultCommand,
+          moreDesc
         );
 
         if (data.flags) {
           msg.push(
-            ...['', 'Options:'],
+            '',
+            'Options:',
             ...Object.keys(data.flags).map(key => {
               if (!data.flags) return '';
               const flag = data.flags[key];
@@ -69,19 +68,17 @@ const help = ({
         msg.push('');
       }
 
-      msg.push(...[`Usage: ${binName} [command] [options]`, '', 'Commands:']);
+      msg.push(`Usage: ${binName} [command] [options]`, '', 'Commands:');
       msg.push(
         ...Object.keys(commands).map(
           key => `  - ${bold(key)}: ${commands[key].description || key}`
         )
       );
       msg.push(
-        ...[
-          '',
-          `Run "${bold(
-            `${binName} help [command]`
-          )}" for detailed usage of the command.`
-        ]
+        '',
+        `Run "${bold(
+          `${binName} help [command]`
+        )}" for detailed usage of the command.`
       );
     }
 
