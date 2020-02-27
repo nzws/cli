@@ -1,8 +1,5 @@
-const cli = require('../build');
-const { version } = require('./package');
-
-cli({
-  name: `example-multi-cli ${version}`,
+module.exports = {
+  name: `example-multi-cli v1.0.0`,
   binName: 'example-multi',
   defaultCommand: 'debug',
   commands: {
@@ -38,4 +35,4 @@ cli({
       }
     }
   }
-});
+};

@@ -1,8 +1,5 @@
-const cli = require('../build');
-const { version } = require('./package');
-
-cli({
-  name: `example-cli ${version}`,
+module.exports = {
+  name: `example-cli v1.0.0`,
   binName: 'example',
   command: {
     description: 'Say hello!',
@@ -17,4 +14,4 @@ cli({
       }
     }
   }
-});
+};

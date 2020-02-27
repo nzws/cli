@@ -101,7 +101,9 @@ const run = (config: Config): void => {
           const flagConfig = Flags[flagId];
           if (flagConfig.hasValue === 0 && value !== undefined) {
             throw new Error(
-              `${bold(addPrefix(key))} has no value. ${addPrefix(key)}`
+              `${bold(addPrefix(key))} can't contain a value. (${addPrefix(
+                key
+              )})`
             );
           } else if (flagConfig.hasValue === 2 && value === undefined) {
             throw new Error(

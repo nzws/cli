@@ -9,4 +9,6 @@
 
 A **lightweight** node-cli framework written in TypeScript.
 
+[Document](https://github.com/dotplants/cli/tree/master/docs) | [Example](https://github.com/dotplants/cli/tree/master/example)
+
 **⚠This project is currently a beta release.**
