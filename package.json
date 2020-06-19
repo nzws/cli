@@ -55,6 +55,6 @@
   ],
   "prettier": "@yuzulabo/prettier-config",
   "dependencies": {
-    "kleur": "^3.0.3"
+    "kleur": "^4.0.1"
   }
 }
