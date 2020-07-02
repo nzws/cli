@@ -47,7 +47,7 @@
     "npm-run-all": "~4",
     "prettier": "~1",
     "pretty-quick": "^2.0.1",
-    "typescript": "^3.9.3"
+    "typescript": "^3.9.6"
   },
   "files": [
     "README.md",
