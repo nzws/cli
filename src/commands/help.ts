@@ -1,5 +1,5 @@
 import { bold } from 'kleur';
-import { Command, commandFunction, Config } from '../runner';
+import { Command, commandFunction, ConfigTypes } from '../runner';
 import { addPrefix } from '../utils/prefix';
 
 const help = ({
@@ -8,7 +8,7 @@ const help = ({
   command,
   commands,
   defaultCommand
-}: Config): Command => ({
+}: ConfigTypes): Command => ({
   description: 'Show the help of cli',
   function({ args }: commandFunction): void {
     const msg: Array<string | false | undefined> = [bold(name), ''];
@@ -31,7 +31,9 @@ const help = ({
 
         msg.push(
           `Usage: ${binName} ${helpCommand ? `${helpCommand} ` : ''}${
-            data.argsName ? data.argsName.map(v => `[${v}] `).join('') : ''
+            data.argsName
+              ? data.argsName.map((v: string) => `[${v}] `).join('')
+              : ''
           }[options]`,
           data.description || helpCommand || defaultCommand,
           moreDesc
@@ -48,7 +50,8 @@ const help = ({
                 flag.name = [flag.name];
               }
               const names = flag.name.map(
-                v => bold(addPrefix(v)) + (flag.hasValue ? `=[value]` : '')
+                (v: string) =>
+                  bold(addPrefix(v)) + (flag.hasValue ? `=[value]` : '')
               );
 
               return `  ${names.join(', ')}: ${flag.description || key} ${
