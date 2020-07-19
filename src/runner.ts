@@ -14,7 +14,7 @@ export type commandFunction = {
 export type Command = {
   description: string;
   moreDescription?: string | Array<string>;
-  function: (args: commandFunction) => void;
+  function: (args: commandFunction) => void | Promise<void>;
   argsName?: Array<string>;
   flags?: {
     [key: string]: {
