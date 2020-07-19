@@ -1,3 +1,3 @@
-import run from './runner';
+import run, { ConfigTypes } from './runner';
 
-export { run };
+export { run, ConfigTypes };

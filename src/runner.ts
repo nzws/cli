@@ -3,10 +3,18 @@ import { errorExit } from './utils/exit';
 import { bold } from 'kleur';
 import { addPrefix, removePrefix } from './utils/prefix';
 
+export type commandFunction = {
+  args: Array<string>;
+  flags: {
+    [key: string]: string | true;
+  };
+  isDefault: boolean;
+};
+
 export type Command = {
   description: string;
   moreDescription?: string | Array<string>;
-  function: Function;
+  function: (args: commandFunction) => void;
   argsName?: Array<string>;
   flags?: {
     [key: string]: {
@@ -18,7 +26,7 @@ export type Command = {
 };
 type Commands = { [key: string]: Command };
 
-export type Config = {
+export type ConfigTypes = {
   name: string;
   binName: string;
   command?: Command;
@@ -27,15 +35,7 @@ export type Config = {
   args?: Array<string>;
 };
 
-export type commandFunction = {
-  args: Array<string>;
-  flags: {
-    [key: string]: string | true;
-  };
-  isDefault: boolean;
-};
-
-const run = (config: Config): void => {
+const run = (config: ConfigTypes): void => {
   try {
     const argv: Array<string> =
       config.args || process.argv.filter((v, index) => index > 1);
@@ -130,7 +130,9 @@ const run = (config: Config): void => {
       });
     }
 
-    Promise.resolve(command.function({ args, flags, isDefault }));
+    Promise.resolve(command.function({ args, flags, isDefault })).catch(
+      errorExit
+    );
   } catch (e) {
     errorExit(e);
   }

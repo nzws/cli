@@ -33,6 +33,12 @@ module.exports = {
           hasValue: 2
         }
       }
+    },
+    error: {
+      description: 'error test',
+      function: async () => {
+        throw new Error('this is error');
+      }
     }
   }
 };
