@@ -1,5 +1,5 @@
 import { bold } from 'kleur';
-import { Command, commandFunction, ConfigTypes } from '../runner';
+import { Command, commandFunction, ConfigTypes } from '../';
 import { addPrefix } from '../utils/prefix';
 
 const help = ({

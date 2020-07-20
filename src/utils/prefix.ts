@@ -1,11 +1,11 @@
 export const addPrefix = (key: string): string =>
-  key.length === 1 ? `-${key}` : `--${key}`;
+  (key.length === 1 ? '-' : '--') + key;
 
 export const removePrefix = (key: string): string => {
-  if (key.indexOf('--') === 0) {
-    return key.slice(2);
-  } else if (key.indexOf('-') === 0) {
-    return key.slice(1);
+  const [f, s] = key.split('');
+
+  if (f === '-') {
+    return key.slice(s === '-' ? 2 : 1);
   } else {
     throw new Error(`This flag hasn't prefix.`);
   }
