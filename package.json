@@ -45,7 +45,7 @@
     "cross-env": "^7.0.2",
     "eslint": "~7.5.0",
     "npm-run-all": "~4",
-    "prettier": "~2.0.5",
+    "prettier": "~2.1.0",
     "typescript": "^3.9.7"
   },
   "files": [
