@@ -1,7 +1,7 @@
 {
   "name": "@dotplants/cli",
-  "version": "0.2.2",
-  "author": ".Plants <oss@dotplants.net>",
+  "version": "0.2.3",
+  "author": "dotPlants <oss@dotplants.net>",
   "maintainers": [
     "nzws <nzws@hq.dotplants.net>"
   ],
@@ -31,22 +31,22 @@
     "start:single": "yarn dev-build && node example/single/bin/single-cli.js"
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.10.5",
-    "@babel/preset-env": "^7.10.4",
-    "@babel/preset-typescript": "^7.10.4",
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-typescript": "^7.12.1",
     "@nzws/prettier-config": "^1.0.1",
-    "@types/node": "^14.0.23",
-    "@typescript-eslint/eslint-plugin": "^3.6.1",
-    "@typescript-eslint/parser": "^3.6.1",
+    "@types/node": "^14.14.6",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
     "@yuzulabo/eslint-config": "^1.0.1",
-    "babel-plugin-add-module-exports": "^1.0.2",
+    "babel-plugin-add-module-exports": "^1.0.4",
     "babel-preset-minify": "^0.5.1",
     "cross-env": "^7.0.2",
-    "eslint": "~7.5.0",
+    "eslint": "~7.12.1",
     "npm-run-all": "~4",
-    "prettier": "~2.0.5",
-    "typescript": "^3.9.7"
+    "prettier": "~2.1.2",
+    "typescript": "^4.0.5"
   },
   "files": [
     "README.md",
@@ -54,6 +54,6 @@
   ],
   "prettier": "@nzws/prettier-config",
   "dependencies": {
-    "kleur": "^4.0.2"
+    "kleur": "^4.1.3"
   }
 }
