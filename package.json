@@ -33,7 +33,7 @@
   "devDependencies": {
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
+    "@babel/preset-env": "^7.13.12",
     "@babel/preset-typescript": "^7.12.1",
     "@nzws/prettier-config": "^1.0.1",
     "@types/node": "^14.14.6",
