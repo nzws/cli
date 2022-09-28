@@ -31,7 +31,7 @@
     "start:single": "yarn dev-build && node example/single/bin/single-cli.js"
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
+    "@babel/cli": "^7.19.3",
     "@babel/core": "^7.12.3",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
