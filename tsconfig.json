@@ -1,12 +1,6 @@
 {
+  "extends": "@tsconfig/node20/tsconfig.json",
   "compilerOptions": {
-    "target": "ES2019",
-    "module": "commonjs",
-    "strict": true,
-    "moduleResolution": "node",
-    "forceConsistentCasingInFileNames": true,
-    "declaration": true,
-    "emitDeclarationOnly": true,
     "outDir": "build"
   },
   "include": ["src"]
