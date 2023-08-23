@@ -36,7 +36,7 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
     "@nzws/prettier-config": "^1.0.1",
-    "@types/node": "^14.14.6",
+    "@types/node": "^20.5.3",
     "@typescript-eslint/eslint-plugin": "^4.6.0",
     "@typescript-eslint/parser": "^4.6.0",
     "@yuzulabo/eslint-config": "^1.0.1",
